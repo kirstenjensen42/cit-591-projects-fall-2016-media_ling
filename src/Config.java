@@ -1,7 +1,8 @@
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
-import twitter4j.conf.ConfigurationBuilder;
-import twitter4j //where are my streams?
+import twitter4j.TwitterStream;
+import twitter4j.TwitterStreamFactory;
+import twitter4j.conf.ConfigurationBuilder; 
 
 /*
  * Created with code from Twitter4J
@@ -65,7 +66,7 @@ public class Config {
 	 */
 	public static TwitterStream createStream() {
 		TwitterStreamFactory tsf = createStreamFactory();
-		TwitterStream twitterStream = tsf.getInstance();
+		TwitterStream twitterStream = tsf.getInstance();////what's happpening here?
 		
 		return twitterStream;
 	}
