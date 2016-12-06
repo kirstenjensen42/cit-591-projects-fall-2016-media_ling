@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -33,27 +34,26 @@ import twitter4j.TwitterFactory;
  */
 public class TweetSearch {
 
+	private ArrayList<String> tweetList = new ArrayList<String>();
 	
-	public static void main(String[] args){
+	public void restTweet(String word){
 //		Twitter twitter = new TwitterFactory().getInstance();
 //		Config config = new Config();
 		Twitter twitter = Config.createTwitterObject();
         try {
-        	System.out.println("What word would you like to search for?\n");
-            Scanner in = new Scanner(System.in); //getting a word from the user. This will likely come from another class later
-            String word = in.nextLine(); 
             Query query = new Query(word);  //@TODO handling uppercase?
             query.setLang("en");
             query.setResultType(Query.RECENT);
-            query.setCount(1); //the number of pages?
+            query.setCount(10); //the number of pages?
             QueryResult result; 
             do {
                 result = twitter.search(query);
                 List<Status> tweets = result.getTweets();
                 for (Status tweet : tweets) {
-                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
-                }
+                	tweetList.add(tweet.getText().toLowerCase()); //seems to be working, @TODO test here
                 	
+ //                   System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
+                }
                 
             } while ((query = result.nextQuery()) != null);
             System.exit(0);
@@ -63,5 +63,14 @@ public class TweetSearch {
             System.exit(-1);
         }
 		
+	
 	}
+	/**
+	 * Accessor method for tweetList ArrayList
+	 * @return tweetList
+	 */
+	public ArrayList<String> getTweetList(){
+		return tweetList;
+	}
+
 }
