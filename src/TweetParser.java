@@ -8,18 +8,18 @@ import java.util.Arrays;
  */
 public class TweetParser {
 	
-	private ArrayList<String> tweets = new ArrayList<String>();
+	private ArrayList<String> tweets;
 	private ArrayList<String> words = new ArrayList<String>();
 	private double freq;
 	private String testWord;
+//	private TweetSearch ts;
 	
 	public TweetParser(String rest, String tw){
 		testWord = tw;
 		TweetSearch ts = new TweetSearch();
-		ts.restTweet(tw);
-		tweets = ts.getTweetList(); //need test for this, this is empty
-		System.out.println("got here"); //nothing happening here
-		parse();
+		ts.restTweet();
+		tweets = ts.getTweetList(); //@TODO test for this 
+		parse(); //asynch issues?
 		
 	}
 	
@@ -35,8 +35,10 @@ public class TweetParser {
 	//splitting the tweets into individual words
 	public void parse(){
 		for(String t : tweets){
+			t.replaceAll("\\W", " ");
 			words.addAll(Arrays.asList(t.split(" ")));
 		}
+		//clean tweets
 		System.out.println(words); //write test for this
 		 wordFreq(testWord);
 		

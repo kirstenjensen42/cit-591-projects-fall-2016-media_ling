@@ -1,4 +1,6 @@
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -9,17 +11,6 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
-
-/*
- * 
- * Question for Kirsten/Vicky: 
- * Twitter API appears to just return the tweets that contain a term,
- * it doesn't give a random sampling of tweets...
- * -maybe there is a way to do this. 
- * -might have to use a stream 
- * see: https://dev.twitter.com/streaming/reference/get/statuses/sample
- * 
- */
 
 /*
  * Code template taken from Twitter4J example 'search'
@@ -33,30 +24,37 @@ import twitter4j.TwitterFactory;
  *
  */
 public class TweetSearch {
-
+	
+//	ZonedDateTime since = ZonedDateTime.now();
+//	ZonedDateTime until = since; //what is the format for this?
+	private final int TWEET_CAP = 100;
 	private ArrayList<String> tweetList = new ArrayList<String>();
 	
-	public void restTweet(String word){
+	public void restTweet(){
 //		Twitter twitter = new TwitterFactory().getInstance();
 //		Config config = new Config();
 		Twitter twitter = Config.createTwitterObject();
         try {
-            Query query = new Query(word);  //@TODO handling uppercase?
+            Query query = new Query("e");  //@TODO handling uppercase?
             query.setLang("en");
-            query.setResultType(Query.RECENT);
-            query.setCount(10); //the number of pages?
+ //           query.setResultType(Query.RECENT);
+            query.since("2016-12-05");
+            query.until("2016-12-06"); //can this be more specific?
+            query.setCount(1); //the number of pages?
             QueryResult result; 
             do {
                 result = twitter.search(query);
                 List<Status> tweets = result.getTweets();
                 for (Status tweet : tweets) {
                 	tweetList.add(tweet.getText().toLowerCase()); //seems to be working, @TODO test here
-                	
- //                   System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
+                	if(tweetList.size() > TWEET_CAP) {
+                		break;
+                	}
+                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
                 }
                 
             } while ((query = result.nextQuery()) != null);
-            System.exit(0);
+//            System.exit(0);
         } catch (TwitterException te) {
             te.printStackTrace();
             System.out.println("Failed to search tweets: " + te.getMessage());
