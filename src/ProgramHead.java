@@ -9,11 +9,6 @@ import javax.security.auth.callback.Callback;
  */
 public class ProgramHead {
 	
-	//callbacks?
-//	public static void parseAfter(String response){
-//		tp.parse();
-//		System.out.println(tp.getFreq());
-//	}
 
 	public static void main(String[] args){
 		System.out.println("Hi there, what word would you like to test?");

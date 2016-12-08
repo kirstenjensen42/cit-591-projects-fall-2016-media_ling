@@ -12,7 +12,7 @@ public class TweetParser {
 	private ArrayList<String> words = new ArrayList<String>();
 	private double freq;
 	private String testWord;
-//	private TweetSearch ts;
+
 	
 	public TweetParser(String rest, String tw){
 		testWord = tw;
@@ -35,29 +35,45 @@ public class TweetParser {
 	//splitting the tweets into individual words
 	public void parse(){
 		for(String t : tweets){
-			t.replaceAll("\\W", " ");
 			words.addAll(Arrays.asList(t.split(" ")));
 		}
-		//clean tweets
-		System.out.println(words); //write test for this
+		words = cleanTweets(words);
 		 wordFreq(testWord);
 		
 	}
 	
 	public void wordFreq(String target){
-		int counter = 0;
-		for (String w : words){
-			if(w.equals(target)){
+		double counter = 0.0;
+		for (String w : words){ 
+//			System.out.println(w);
+			if(w.equals(target)){ //or contains
 				counter++;
 			}
 			
 		}
 		 freq = counter/words.size();
-//		return freq;
+
 	}
-	
+	/**
+	 * Accessor method for frequency
+	 * @return frequency
+	 */
 	public double getFreq(){
 		return freq;
+	}
+	
+	/**
+	 * Take 
+	 * @return
+	 */
+	public ArrayList<String> cleanTweets(ArrayList<String> dirtyWords){
+		for(String words : dirtyWords){
+		//mmm returns string... = words.replaceAll("\\W", " "); //cleaning tweets, still getting hashtags and handles replace/replaceALL
+		
+		}
+		
+		return words;
+		
 	}
 	
 }

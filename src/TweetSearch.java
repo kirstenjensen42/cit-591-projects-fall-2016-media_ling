@@ -1,5 +1,8 @@
+import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Calendar.Builder;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
@@ -25,22 +28,26 @@ import twitter4j.TwitterFactory;
  */
 public class TweetSearch {
 	
-//	ZonedDateTime since = ZonedDateTime.now();
-//	ZonedDateTime until = since; //what is the format for this?
-	private final int TWEET_CAP = 100;
+	private final int TWEET_CAP = 10;
 	private ArrayList<String> tweetList = new ArrayList<String>();
+//	private Date date;
+	
+	
 	
 	public void restTweet(){
 //		Twitter twitter = new TwitterFactory().getInstance();
 //		Config config = new Config();
+		String yesterday = dateBuilder(1);
+		String twoDaysAgo = dateBuilder(2);
+		
+		
 		Twitter twitter = Config.createTwitterObject();
         try {
-            Query query = new Query("e");  //@TODO handling uppercase?
+            Query query = new Query("e");  //@TODO handling uppercase? Want empty request 
             query.setLang("en");
- //           query.setResultType(Query.RECENT);
-            query.since("2016-12-05");
-            query.until("2016-12-06"); //can this be more specific?
-            query.setCount(1); //the number of pages?
+            query.since(twoDaysAgo); 
+            query.until(yesterday); 
+            query.setCount(100); //the number of tweets per 'page'
             QueryResult result; 
             do {
                 result = twitter.search(query);
@@ -69,6 +76,20 @@ public class TweetSearch {
 	 */
 	public ArrayList<String> getTweetList(){
 		return tweetList;
+	}
+	
+	/**
+	 * This method allows for the tweet search to stay within the timeing of Twitter's limited search window
+	 * @param offset a positive number for how many days previous to today
+	 * @return a modified date
+	 */
+	public String dateBuilder(int offset){
+		Calendar c = Calendar.getInstance(); //today
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		c.add(Calendar.DATE, -offset);
+		String newDate = sdf.format(c.getTime());
+		return newDate;
+		
 	}
 
 }
