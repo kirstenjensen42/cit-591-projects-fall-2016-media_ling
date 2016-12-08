@@ -34,10 +34,11 @@ public class TweetParser {
 	}
 	//splitting the tweets into individual words
 	public void parse(){
+		ArrayList<String> temp = new ArrayList<String>(); //to avoid comod exception - probably not the issue
 		for(String t : tweets){
-			words.addAll(Arrays.asList(t.split(" ")));
+			temp.addAll(Arrays.asList(t.split(" ")));
 		}
-		words = cleanTweets(words);
+		words = cleanTweets(temp);
 		 wordFreq(testWord);
 		
 	}
@@ -63,16 +64,20 @@ public class TweetParser {
 	}
 	
 	/**
-	 * Take 
-	 * @return
+	 * Takes in a ArrayList of Strings removes punctuation and links
+	 * @return ArrayList of Strings of 'clean' words
 	 */
 	public ArrayList<String> cleanTweets(ArrayList<String> dirtyWords){
-		for(String words : dirtyWords){
-		//mmm returns string... = words.replaceAll("\\W", " "); //cleaning tweets, still getting hashtags and handles replace/replaceALL
-		
+		ArrayList<String> temp = new ArrayList<String>(dirtyWords); //to avoid comod exception
+		String tempWord = new String();
+		for(String word : temp){
+		 word = word.replaceAll("\\W", " "); //cleaning tweets, still getting hashtags and handles replace/replaceALL
+		  if(word.contains("http")){
+			  dirtyWords.remove(word);
+		  }
 		}
-		
-		return words;
+		System.out.println(temp);
+		return dirtyWords;
 		
 	}
 	
