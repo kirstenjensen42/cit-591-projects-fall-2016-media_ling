@@ -4,6 +4,7 @@ package src;
 /**
  * This class is used to calculate the relative frequency of occurrence of a given word between two separate 
  * corpora. It uses a method of evaluation described in this article: http://ucrel.lancs.ac.uk/acl/W/W00/W00-0901.pdf
+ * and also here: http://wordhoard.northwestern.edu/userman/analysis-comparewords.html
  * 
  * The results given by this method are more accurate in terms of wholistic language use when the word 
  * counts of two corpora is approximately equal. However, takes the corpora sizes into account in the equation 
@@ -33,6 +34,9 @@ public class FrequencyProfiler {
 	 * This is the constructor. It takes in two arguments: the total word count of corpus A and the total 
 	 * word count of corpus A.
 	 * 
+	 * A FrequencyProfiler object should be created for each set of corpora you will compare. Once instanciated
+	 * the object will be passed observed counts of a search work through its getFrequencyProfile method.
+	 * 
 	 * @param corpusA
 	 * @param corpusB
 	 */
@@ -46,35 +50,55 @@ public class FrequencyProfiler {
 		expectedValueB = 0;
 	}
 	
-	
 	/**
-	 * This method calculates the expected values of the search word in each corpus.
-	 * @param observedA the expectation of the word appearing in corpusA
-	 * @param observedB the expectation of the word appearing in corpusB
+	 * This public method is called with 2 arguments--the frequency of occurrence of a particular search 
+	 * query in corpus A and in corpus B. It calculates the log-likeliness of the word's appearance in the 
+	 * corpus in which it appeared with a greater relative frequency.
+	 * 
+	 * Log-likeliness will always be positive. However, for the purpose of displaying the results this 
+	 * method returns the results as a positive value if the overuse of the word occurs in corpus A 
+	 * and a negative value if the overuse is in corpus B.
+	 * 
+	 * @param observedA the number of times the search query appeared in corpus A
+	 * @param observedB the number of times the search query appeared in corpus B
+	 * @return the log-likelihood (positive means relatively more in A, negative means more in B)
 	 */
-	private void getExpectedValues(double observedA, double observedB ) {
-		if(observedA == 0) observedA = 0.5;
-		if(observedB ==0) observedB = 0.5;
-		double freqOfOtherWordsA = corpusA - observedA ;
-		double freqOfOtherWordsB = corpusB - observedB ;
+	public double getFrequencyProfile(double observedA, double observedB ) {
+		double frequencyProfile = 0;
+		this.observedA = observedA;
+		this.observedB = observedB;
 		
-		expectedValueA = (corpusA*(observedA + observedB))/(corpusA + corpusB);
-		expectedValueB = (corpusB*(observedA + observedB))/(corpusA + corpusB);
+		if (observedA == 0) observedA = .1;
+		if (observedB == 0) observedB = .1;
 		
-	}
-	
-	/**
-	 * This method calculates the word's log-likelihood in the corpus in which it appears with 
-	 * the highest relative frequency.
-	 * @param expectedValueA
-	 * @param expectedValueB
-	 */
-	private void calculateLogLikelihood(double expectedValueA, double expectedValueB) {
-		//  ll = 2*((a*ln (a/E1)) + (b*ln (b/E2)))
-		
-		double ll = 2*(Math.log10(corpusA/expectedValueA) + Math.log10(corpusB/expectedValueB)) ;
-		
-	}
+		expectedValueA = (corpusA)*(observedA+observedB)/(corpusA+corpusB) ;
+		expectedValueB = (corpusB)*(observedA+observedB)/(corpusA+corpusB) ;
 
+		double lla = observedA*(Math.log(observedA)-Math.log(expectedValueA)) ;
+		double llb = observedB*(Math.log(observedB)-Math.log(expectedValueB)) ;		
+		
+		double ll = 2*(lla+llb);
+						
+		frequencyProfile = ll * overuseIndicator();
+		return frequencyProfile;
+	}
+	
+	
+	/**
+	 * This method compares the relative frequency of the occurrence of the search query in 
+	 * corpusA vs corpusB and sets an indicator to 1 or -1 based on whether it appears in A 
+	 * or B with a higher relative frequency.
+	 * 
+	 * -1 indicates overuse in corpus B
+	 * 1 indicates overuse in corpus A
+	 * 
+	 * @return
+	 */
+	private int overuseIndicator() {
+		int indicator = -1;
+		if (observedA/corpusA > observedB/corpusB) indicator = 1;
+		return indicator;
+	}
+	
 
 }
