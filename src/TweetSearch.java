@@ -57,7 +57,7 @@ public class TweetSearch {
                 	if(tweetList.size() > TWEET_CAP) {
                 		break;
                 	}
-                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
+ //                   System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
                 }
                 
             } while ((query = result.nextQuery()) != null);
