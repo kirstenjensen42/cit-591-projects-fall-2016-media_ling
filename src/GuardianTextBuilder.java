@@ -8,14 +8,14 @@ import org.json.JSONArray;
 import org.json.JSONTokener;
 
 public class GuardianTextBuilder {
-	
+
 	private ArrayList<String> articleText;
 	private ArrayList<String> articleIDs ;
 	private ArrayList<String> firstCallList ;
 	private ArrayList<String> dirtyArticles ;
 	private GuardianAPICaller apiCaller ;
 	private int totalWords = 0;
-	
+
 	public GuardianTextBuilder(String date) {
 		apiCaller = new GuardianAPICaller(date) ;
 		articleText = new ArrayList<String>();
@@ -23,8 +23,8 @@ public class GuardianTextBuilder {
 		firstCallList = new ArrayList<String>();
 		dirtyArticles = new ArrayList<String>();
 	}
-	
-	
+
+
 	public void firstCall() {
 		firstCallList.clear();
 		int p = 2 ;
@@ -34,7 +34,7 @@ public class GuardianTextBuilder {
 		Pattern pat1 = Pattern.compile(jsonObject) ;
 		Pattern pat2 = Pattern.compile(pageCount) ;
 		String responce ;
-		
+
 		//call first page
 		String url = apiCaller.buildURL(1);
 		try {
@@ -43,72 +43,71 @@ public class GuardianTextBuilder {
 			System.out.println("Error retrieving Guardian text.");
 			return;
 		}
-		
-		// get last page number
-		Matcher match = pat2.matcher(responce) ;
-		if (match.find()) {
-			String lastPage = match.group(1);
-			pp = Integer.valueOf(lastPage);
-		}
-		
+
+//		// get last page number
+//		Matcher match = pat2.matcher(responce) ;
+//		if (match.find()) {
+//			String lastPage = match.group(1);
+//			pp = Integer.valueOf(lastPage);
+//		}
+
 		// add formatted first page
 		Matcher m1 = pat1.matcher(responce);
 		if (m1.find()) {
 			responce = m1.group(0);
 			firstCallList.add(responce);
 		}
-		
+
 		// get all the other pages
-		for (; p <= pp; p++) {
-			url = apiCaller.buildURL(p);
-			try {
-				responce = "[" + apiCaller.makeCall(url) + "]";
-				m1 = pat1.matcher(responce);
-				
-				if (m1.find()) {
-					responce = m1.group(0);
-					firstCallList.add(responce);
-				}
-				
-			} catch (Exception e) {
-				// do nothing
-			}
-			
-		}	
+//		for (; p <= pp; p++) {
+//			url = apiCaller.buildURL(p);
+//			try {
+//				responce = "[" + apiCaller.makeCall(url) + "]";
+//				m1 = pat1.matcher(responce);
+//
+//				if (m1.find()) {
+//					responce = m1.group(0);
+//					firstCallList.add(responce);
+//				}
+//
+//			} catch (Exception e) {
+//				// do nothing
+//			}
+//
+//		}
 	}
-	
+
 	public void getArticleIDs() {
 		firstCall();
 		articleIDs.clear();
 		String getId = "\"id\":\"([^\"]*)\"" ;
 		Pattern pat1 = Pattern.compile(getId) ;
-		
+
 		for (int k = 0; k < firstCallList.size(); k++ ) {
 			JSONTokener tok = new JSONTokener(firstCallList.get(k));
-			
+
 			JSONArray array = new JSONArray(tok);
-			
+
 			for (int m = 0; m < array.length(); m++) {
 				String j = array.get(m).toString();
 				Matcher match = pat1.matcher(j);
 				if (match.find()) j = match.group(1);
 				articleIDs.add(j);
 			}
-			
+
 		}
-		
+
 		firstCallList.clear();
-		
 	}
-	
-	
+
+
 	public ArrayList<String> callArticleTexts() {
-		dirtyArticles.clear();		
+		dirtyArticles.clear();
 		getArticleIDs();
 		String wordCount = ".*\"wordcount\":\"(.*)\"}" ;
 		Pattern pat1 = Pattern.compile(wordCount) ;
 
-		
+
 		for (int k = 0; k < articleIDs.size(); k++) {
 //			for (int k = 0; k < 1; k ++) {
 			try {
@@ -120,7 +119,7 @@ public class GuardianTextBuilder {
 					int articleWordCount = Integer.valueOf(match.group(1));
 					totalWords = totalWords + articleWordCount;
 				}
-				
+
 				// clean up article
 				text = text.replaceFirst("[^\\<]*<p>", "");
 				text = text.replaceAll("\",\"wordcount\".*}", "");
@@ -134,9 +133,9 @@ public class GuardianTextBuilder {
 				// skip
 			}
 		}
-		
+
 		return dirtyArticles;
-		
+
 	}
 
 
