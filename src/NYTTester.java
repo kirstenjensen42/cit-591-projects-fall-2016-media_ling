@@ -14,11 +14,13 @@ public class NYTTester {
 		
 		GuardianTextBuilder gBuild = new GuardianTextBuilder("2016-12-09") ;
 		
-		try {
-			gBuild.getArticleIDs();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		gBuild.callArticleTexts();
+		
+//		try {
+//			gBuild.getArticleIDs();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 
 		
