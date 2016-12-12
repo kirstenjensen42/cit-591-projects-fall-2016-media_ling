@@ -14,7 +14,7 @@ public class GuardianTextBuilder {
 	private ArrayList<String> firstCallList ;
 	private ArrayList<String> dirtyArticles ;
 	private GuardianAPICaller apiCaller ;
-	
+	private int totalWords = 0;
 	
 	public GuardianTextBuilder(String date) {
 		apiCaller = new GuardianAPICaller(date) ;
@@ -102,28 +102,50 @@ public class GuardianTextBuilder {
 	}
 	
 	
-	public void callArticleTexts() {
-		dirtyArticles.clear();
+	public ArrayList<String> callArticleTexts() {
+		dirtyArticles.clear();		
 		getArticleIDs();
+		String wordCount = ".*\"wordcount\":\"(.*)\"}" ;
+		Pattern pat1 = Pattern.compile(wordCount) ;
+
 		
 		for (int k = 0; k < articleIDs.size(); k++) {
-			
+//			for (int k = 0; k < 1; k ++) {
 			try {
 				String text = apiCaller.makeCall(apiCaller.buildURL(articleIDs.get(k)));
+
+				// get wordcount
+				Matcher match = pat1.matcher(text) ;
+				if (match.find()) {
+					int articleWordCount = Integer.valueOf(match.group(1));
+					totalWords = totalWords + articleWordCount;
+				}
+				
+				// clean up article
+				text = text.replaceFirst("[^\\<]*<p>", "");
+				text = text.replaceAll("\",\"wordcount\".*}", "");
+				text = text.replaceAll("\\<[^\\>]*\\>", "");
+//				text = text.replaceAll("\\b\\?\\b", "'");
+//				text = text.replaceAll("\\B\\?", "'");
+
+				// add text to ArrayList
 				dirtyArticles.add(text);
 			} catch (Exception e) {
 				// skip
 			}
 		}
 		
-		System.out.println(dirtyArticles.get(0));
-		System.out.println("\n");
-		System.out.println(dirtyArticles.get(2));
+		return dirtyArticles;
 		
 	}
-	
-	
-	
+
+
+	/**
+	 * @return the totalWords
+	 */
+	public int getTotalWords() {
+		return totalWords;
+	}
 
 }
 
@@ -140,7 +162,22 @@ public class GuardianTextBuilder {
 
 
 
-
+/*
+for (int l = 0; l < 2; l++) {
+	String text = dirtyArticles.get(l);
+	System.out.println(text);
+	text = text.replaceFirst("[^\\<]*<p>", "");
+	System.out.println(text);
+	text = text.replaceAll("\",\"wordcount\".*}", "");
+	text = text.replaceAll("\\<[^\\>]*\\>", "");
+	text = text.replaceAll("\\b\\?\\b", "'");
+	text = text.replaceAll("\\B\\?", "'");
+	articleText.add(text);
+}
+*/
+//System.out.println(articleText.get(0));
+//System.out.println("\n");
+//System.out.println(articleText.get(2));
 
 
 
