@@ -14,87 +14,39 @@ public class GuardianAPICaller {
 	private int page ;
 	
 	private final String URL_BASE = "https://content.guardianapis.com/search?format=json";
+	private final String ARTICLE_URL_BASE = "https://content.guardianapis.com/";
+	private final String ARTICLE_URL_TAIL = "?format=json&show-fields=wordcount,body" ;
 	private final String FULL_PAGE = "&page-size=50";
 	private final String KEY = "&api-key=2ebaa53e-8de0-4af4-b538-279f54e9d815";
-
 	private final String USER_AGENT = "007";
 	
-	private ArrayList<String> articleIDs ;
-	private ArrayList<String> APIResponces ;
+	String dateCall ;
 
-	public GuardianAPICaller() {
-		articleIDs = new ArrayList<String>();
-		APIResponces = new ArrayList<String>();
-		
-	}
-	
-	public String setAPIResponces(String date) throws Exception {
-//		articleIDs.clear();
-		APIResponces.clear();
-		int p = 0;
-		
-		//first call
-		String url = buildURL(date, 1);
-		String responce = "[" + makeCall(url) + "]";
-		APIResponces.add(responce);
-//		String thing1 = "\\[.*\\]";
-		String thing1 = "(\\[[^\\[\\]]*\\])";
-		Pattern pat2 = Pattern.compile(thing1);
-		Matcher m2 = pat2.matcher(responce);
-		if (m2.find()) responce = m2.group(0);
-		return responce;
-		
-////		String id = "\"id\":\"([^\"]*)";
-////		Pattern pat1 = Pattern.compile(id);
-////		Matcher m1 = pat1.matcher(APIResponces.get(0));
-////		if (m1.matches()) {
-////			for (int k = 0; k < m1.groupCount(); k++) {
-////				System.out.println("Group " + k + ": " + m1.group(k) + "\n");
-////			}
-////		} else {
-////			System.out.println("No match found.");
-////		}
-		
-		
-//		String pageCount = "\"pages\":(\\d*)," ;
-//		Pattern pat = Pattern.compile(pageCount) ;
-//		Matcher m = pat.matcher(articleIDs.get(0)) ;
-		
-//		if (m.find()) {
-//			String pp = m.group(1);
-//			p = Integer.valueOf(pp);
-//		}
-		
-//		for (int i = 2; i <= p; i++) {
-//		url = buildURL(date, i);
-//		responce = makeCall(url);
-//		APIResponces.add(responce);
-//		}
-		
-	}
-	
-	public ArrayList<String> getArticleIDs(String date) {
-		
-		
-		
-		return articleIDs;
-	}
-	
-	public String buildURL(String date, int page) {
+
+	public GuardianAPICaller(String date) {
 		this.date = date;
+		dateCall = "&from-date=" + date + "&to-date=" + date;
+	}
+	
+	
+	public String buildURL(int page) {
 		this.page = page;
-		String dateCall = "&from-date=" + date + "&to-date=" + date;
 		String pageCall = "&page=" + page;
 		
-//		String url = URL_BASE + dateCall + FULL_PAGE + pageCall + KEY;
-		
-		String url = URL_BASE + dateCall + KEY;
-		
+		String url = URL_BASE + dateCall + FULL_PAGE + pageCall + KEY;
+				
 		return url;
 	}
 	
-	private String makeCall(String url) throws Exception {
-//		String results ="";
+	public String buildURL(String articleId) {
+		
+		String url = ARTICLE_URL_BASE + articleId + ARTICLE_URL_TAIL + KEY;
+				
+		return url;
+	}
+	
+	
+	public String makeCall(String url) throws Exception {
 		
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -117,10 +69,8 @@ public class GuardianAPICaller {
 		in.close();
 		
 		return response.toString();
-		
-		
+				
 	}
-	
 	
 
 }
