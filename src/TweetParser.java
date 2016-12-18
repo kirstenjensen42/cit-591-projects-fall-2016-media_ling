@@ -56,7 +56,7 @@ public class TweetParser {
 	 * This method splits the long tweet Strings into individual words, separated by spaces
 	 */
 	public void parse(){
-		ArrayList<String> temp = new ArrayList<String>(); //to avoid comod exception - probably not the issue
+		ArrayList<String> temp = new ArrayList<String>(); //to avoid comod exception
 		for(String t : tweets){
 			temp.addAll(Arrays.asList(t.split(" ")));
 		}
@@ -95,7 +95,6 @@ public class TweetParser {
 	 */ //works but slow...how to improve speed??
 	public ArrayList<String> cleanTweets(ArrayList<String> dirtyWords){
 		ArrayList<String> cleanWords = new ArrayList<String>(); //to avoid comod exception
-//		ArrayList<String> dummy = new ArrayList<String>(dirtyWords);
 		String tempWord = new String();
 		String cleanWord = new String();
 		
@@ -103,8 +102,9 @@ public class TweetParser {
 			tempWord = dirtyTweet.replaceAll("\\W", " ");
 			cleanWord = tempWord.replaceAll("http[^ ]+$?", "");
 			cleanWords.add(cleanWord);
-			//string buffer??
 		}
+		
+		return cleanWords;
 //		cleanTweet = dirtyTweet.replaceAll("@[^ ]+", "");
 //		cleanTweet = dirtyTweet.replaceAll("#[^ ]+$?", "");
 //		cleanTweet = dirtyTweet.replaceAll("http[^ ]+$?", "");
@@ -113,16 +113,8 @@ public class TweetParser {
 //		cleanTweet = dirtyTweet.replaceAll(":\\(", "");
 //		cleanTweet = dirtyTweet.replaceAll("[^a-zA-Z ]", "");
 ////		dirtyTweet = dirtyTweet.toLowerCase();
-//		cleanTweet = dirtyTweet.trim();
-		
-		
-
-//		
-
-//		
-	   
+//		cleanTweet = dirtyTweet.trim();   
 	//	System.out.println(cleanWords); 
-		return cleanWords;
 		
 	}
 	

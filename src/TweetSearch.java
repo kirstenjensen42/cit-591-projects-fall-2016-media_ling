@@ -71,7 +71,7 @@ public class TweetSearch {
         	catch (TwitterException te) {
  //         te.printStackTrace();	
         	String stackMessage = te.getMessage();
-        	if (stackMessage.contains("code - 88")){
+        	if (stackMessage.contains("code - 88")){  //The Twitter code for exceeding rates
         		System.out.println("Tweet limit reached. Try restarting the program in a few minutes.");
         	}
         	else {System.out.println("Failed to search tweets: " + te.getMessage());}
@@ -80,6 +80,7 @@ public class TweetSearch {
 		
 	
 	}
+	
 	/**
 	 * Accessor method for tweetList ArrayList
 	 * @return tweetList
@@ -125,7 +126,6 @@ public class TweetSearch {
 //    }
 //			
 //		}
-		
 	
 	/**
 	 * Accessor method for yesterday's date
