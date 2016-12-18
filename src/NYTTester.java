@@ -1,5 +1,3 @@
-package src;
-
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -11,7 +9,7 @@ public class NYTTester {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
 		String text = "{\"response\":{\"status\":\"ok\",\"userTier\":\"developer\",\"total\":1,\"content\":{\"id\":"
 				+ "\"us-news/2016/dec/09/steve-bannon-seinfeld-royalties-peter-mehlman-trump\",\"type\":\"article\""
 				+ ",\"sectionId\":\"us-news\",\"sectionName\":\"US news\",\"webPublicationDate\":\"2016-12-09T23:28:"
@@ -83,39 +81,39 @@ public class NYTTester {
 				+ " /></p>\",\"wordcount\":\"773\"},\"isHosted\":false}}}";
 
 //		text = text.replaceFirst("[^\\<]*<p>", "");
-//		
+//
 //		text = text.replaceAll("\",\"wordcount\".*}", "");
-//		
+//
 //		text = text.replaceAll("\\<[^\\>]*\\>", "");
-//		
+//
 //		text = text.replaceAll("\\b\\?\\b", "'");
-//		
+//
 //		text = text.replaceAll("\\B\\?", "'");
 
-		
-		
+
+
 //		System.out.println(text);
-		
-		
+
+
 		GuardianTextBuilder gBuild = new GuardianTextBuilder("2016-12-09") ;
-		
-		ArrayList<String> articles = gBuild.callArticleTexts();
+
+//		ArrayList<String> articles = gBuild.callArticleTexts();
 //		System.out.println(articles.get(15));
 		System.out.println("\n\n");
-		System.out.println(gBuild.getTotalWords());
-		
+//		System.out.println(gBuild.getTotalWords());
+
 //		try {
 //			gBuild.getArticleIDs();
 //		} catch (Exception e) {
 //			e.printStackTrace();
 //		}
-		
 
-		
-		
-		
+
+
+
+
 //		ArrayList<String> ids = new ArrayList<String>();
-// 
+//
 //		GuardianAPICaller g = new GuardianAPICaller("2016-12-09");
 //		String json = "";
 //		try {
@@ -123,14 +121,14 @@ public class NYTTester {
 //		} catch (Exception e) {
 //			System.out.println("\n\nException!\n\n");
 //		}
-//		
+//
 //		System.out.println(g.buildURL("us-news/2016/dec/09/steve-bannon-seinfeld-royalties-peter-mehlman-trump"));
 
-		
+
 //		JSONTokener tokens = new JSONTokener(json);
-//		
+//
 //		JSONArray array = new JSONArray(tokens);
-//		
+//
 //		for (int y = 0; y < 10; y++) {
 //			String j = array.get(y).toString();
 //			String getId = "\"id\":\"([^\"]*)\"" ;
@@ -139,9 +137,9 @@ public class NYTTester {
 //			if (match.find()) j = match.group(1);
 //			System.out.println(j);
 //		}
-		
+
 //		System.out.println(ids.get(5));
-		
+
 
 	}
 
