@@ -28,7 +28,7 @@ import twitter4j.TwitterFactory;
  */
 public class TweetSearch {
 	
-	private final int TWEET_CAP = 10;
+	private final int TWEET_CAP = 100;
 	private ArrayList<String> tweetList = new ArrayList<String>();
 //	private Date date;
 	
@@ -43,11 +43,11 @@ public class TweetSearch {
 		
 		Twitter twitter = Config.createTwitterObject();
         try {
-            Query query = new Query("e");  //@TODO handling uppercase? Want empty request 
+            Query query = new Query("%20");  //searching empty space to get most 'random' possible distribution of tweets  
             query.setLang("en");
             query.since(twoDaysAgo); 
             query.until(yesterday); 
-            query.setCount(100); //the number of tweets per 'page'
+            query.setCount(10); //the number of tweets per 'page'
             QueryResult result; 
             do {
                 result = twitter.search(query);

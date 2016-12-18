@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-//    import android.os.AsyncTask;
+
 // see giant bomb
 
 public class OECaller {
@@ -24,6 +24,7 @@ public class OECaller {
 	public OECaller(String word) {
 		this.word = word;
 		this.jso = new JSONObject(callOE());
+		
 		
 //		JSONArray results = jso.getJSONArray("results");
 //		JSONObject jso2 = jso.getJSONObject("lexicalEntries");
@@ -73,8 +74,25 @@ public class OECaller {
         }
      }
     
+    /**
+     * Accessor method for the JSON Object OE word entry
+     * @return the entry in JSONObject 
+     */
     public JSONObject getJSO(){
     	return jso;
+    }
+    
+    /**
+     * Accessor method 
+     * @param word
+     * @return
+     */
+    public Object getDef(JSONObject word){
+    	Object definition = getJSO();
+        definition = word.getJSONArray("results").getJSONObject(0).getJSONArray("lexicalEntries"
+				+ "").getJSONObject(0).getJSONArray("entries").getJSONObject(0).getJSONArray("senses"
+						+ "").getJSONObject(0).getJSONArray("definitions").get(0);
+    	return definition;
     }
     
    }
