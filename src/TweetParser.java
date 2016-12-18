@@ -25,8 +25,19 @@ public class TweetParser {
 		tweets = ts.getTweetList(); //@TODO test for this 
 		parse(); 
 		
+	}
+	
+	/**
+	 * Empty constructor to do a sample rest API call to get random corpus of words
+	 */
+	public TweetParser(){
+		TweetSearch ts = new TweetSearch();
+		ts.restTweet();
+		tweets = ts.getTweetList(); //@TODO test for this 
+		parse(); 
 		
 	}
+	
 	
 	/**
 	 * This is the constructor for using the Stream Sample API
@@ -55,8 +66,7 @@ public class TweetParser {
 	}
 	
 	/**
-	 * Calculates the frequency in which the word appears in the text
-	 * Deprecated 
+	 * Deprecated - Calculates the frequency in which the word appears in the text
 	 * @param target the word you're finding the frequency of
 	 */
 	public void wordFreq(String target){

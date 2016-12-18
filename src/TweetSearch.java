@@ -31,14 +31,15 @@ public class TweetSearch {
 	private final int TWEET_CAP = 100;
 	private ArrayList<String> tweetList = new ArrayList<String>();
 //	private Date date;
-	
+	private String yesterday;
+	private String twoDaysAgo;
 	
 	
 	public void restTweet(){
 //		Twitter twitter = new TwitterFactory().getInstance();
 //		Config config = new Config();
-		String yesterday = dateBuilder(1);
-		String twoDaysAgo = dateBuilder(2);
+		yesterday = dateBuilder(1); 
+	    twoDaysAgo = dateBuilder(2);
 		
 		
 		Twitter twitter = Config.createTwitterObject();
@@ -90,6 +91,22 @@ public class TweetSearch {
 		String newDate = sdf.format(c.getTime());
 		return newDate;
 		
+	}
+	
+	/**
+	 * Accessor method for yesterday's date
+	 * @return String of yesterday's date
+	 */
+	public String getYesterday(){
+		return yesterday;
+	}
+	
+	/**
+	 * Accessor method for the date from two days ago
+	 * @return String date from two days ago
+	 */
+	public String getTwoDaysAgo(){
+		return twoDaysAgo;
 	}
 
 }
