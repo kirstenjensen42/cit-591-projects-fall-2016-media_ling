@@ -15,7 +15,7 @@ public class ProgramHead {
 		Scanner in = new Scanner (System.in);
 		String response = in.nextLine();
 		TweetParser tp = new TweetParser("rest", response); 
-//		System.out.println(tp.getFreq());
+		System.out.println(tp.getFreq());
 
 		
 	}
