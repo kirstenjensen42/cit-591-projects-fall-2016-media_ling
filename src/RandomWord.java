@@ -7,10 +7,11 @@ public class RandomWord {
 	public static String get() {
 		String random ;
 
-		NewYorkTimesAPICaller call = new NewYorkTimesAPICaller() ;
+		GuardianAPICaller call = new GuardianAPICaller("");
+//		NewYorkTimesAPICaller call = new NewYorkTimesAPICaller() ;
 
 		try {
-			random = call.doApiCall("http://randomword.setgetgo.com/get.php");
+			random = call.makeCall("http://randomword.setgetgo.com/get.php");
 		} catch (Exception e) {
 			random = "random";
 		}
