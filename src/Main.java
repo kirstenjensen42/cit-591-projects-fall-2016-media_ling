@@ -34,13 +34,13 @@ public class Main extends Application {
 	LocalDate today = LocalDate.now( zonedId );
 
 	GuardianTextBuilder gBuild = new GuardianTextBuilder(today.toString());
-	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
+//	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
 
-//	TweetParser tp = new TweetParser();
+	TweetParser tp = new TweetParser();
 
 	Corpus guardian = new Corpus(gBuild.callArticleTexts());
-//	Corpus twitter = new Corpus(tp.getWordList());
-	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
+	Corpus twitter = new Corpus(tp.getWordList());
+//	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
 
 	FrequencyProfiler freq = new FrequencyProfiler(guardian.getTotalWordCount(), twitter.getTotalWordCount());
 
