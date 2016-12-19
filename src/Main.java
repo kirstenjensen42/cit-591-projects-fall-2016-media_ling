@@ -30,24 +30,32 @@ import javafx.scene.text.Text;
 
 public class Main extends Application {
 
+	// Set date for Guardian call
 	ZoneId zonedId = ZoneId.of( "America/Montreal" );
 	LocalDate today = LocalDate.now( zonedId );
 
+	// Call Guardian articles
 	GuardianTextBuilder gBuild = new GuardianTextBuilder(today.toString());
-	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
-
-//	TweetParser tp = new TweetParser();
-
 	Corpus guardian = new Corpus(gBuild.callArticleTexts());
+
+	// Call Twitter articles
+//	TweetParser tp = new TweetParser();
 //	Corpus twitter = new Corpus(tp.getWordList());
+
+
+	// alternate if Twitter limit is hit--use two different Guardian corpora
+	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
 	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
 
+	// Set up FrequencyProfiler
 	FrequencyProfiler freq = new FrequencyProfiler(guardian.getTotalWordCount(), twitter.getTotalWordCount());
 
+	// Start JavaFX view
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 
+			// Set up project for BorderPane layout
 			BorderPane border = new BorderPane();
 
 
@@ -59,16 +67,19 @@ public class Main extends Application {
 
 		    GridPane inputBox = new GridPane();
 
+		    // Text for search box
 		    Text enter = new Text("Enter a word: ");
 		    enter.setFont(Font.font("Arial", FontWeight.NORMAL,18));
 		    final TextField wordField = new TextField();
 		    inputBox.add(enter, 1,1);
 		    inputBox.add(wordField,1,2);
 
+		    // Random Button
 		    Button randomButton = new Button("Get random\nword!");
 		    randomButton.setStyle("-fx-font: 12 arial; -fx-text-alignment: center;");
 		    randomButton.setPrefSize(150, 50);
 
+		    // Random Button mouse action
 		    randomButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
@@ -79,18 +90,18 @@ public class Main extends Application {
 				}
 			});
 
-
+		    // Search Button
 		    Button searchButton = new Button("Search for\nthis word");
 		    searchButton.setStyle("-fx-font: 12 arial; -fx-text-alignment: center;");
 		    searchButton.setPrefSize(150, 50);
+		    // Note: search button mouse action is below a bit
 
-
-
+		    // add everything for bottom search bar
 		    hbox.getChildren().addAll(inputBox, searchButton, randomButton);
 		    hbox.setAlignment(Pos.CENTER);
 		    border.setBottom(hbox);
 
-
+		    // Table for left column
 		    TableView<Word> table = new TableView<Word>();
 		    table.setEditable(true);
 
@@ -111,13 +122,18 @@ public class Main extends Application {
 		    wordCol.setStyle( "-fx-alignment: CENTER;");
 		    guardianCol.setPrefWidth(80);
 
+		    StackPane list = new StackPane();
+		    list.getChildren().add(table);
+		    border.setLeft(list);
 
+		    // Center box for definition
 		    HBox def = new HBox();
 		    def.setPadding(new Insets(25, 22, 25, 22));
 		    def.setSpacing(10);
 		    def.setStyle("-fx-background-color: #ffffff; -fx-font: 18 arial;");
 		    border.setCenter(def);
 
+		    // Table for right column
 		    TableView<Word> notFoundTable = new TableView<Word>();
 		    notFoundTable.setEditable(true);
 
@@ -134,6 +150,8 @@ public class Main extends Application {
 		    notList.getChildren().add(notFoundTable);
 		    border.setRight(notList);
 
+
+		    // Mouse action for clicking left table
 		    table.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 		        @Override
@@ -146,6 +164,7 @@ public class Main extends Application {
 		        }
 		    });
 
+		    // Mouse action for clicking right table
 		    notFoundTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 		        @Override
@@ -158,6 +177,7 @@ public class Main extends Application {
 		        }
 		    });
 
+		    // Mouse action for search button
 		    searchButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
@@ -182,22 +202,20 @@ public class Main extends Application {
 						article = guardian.getWords().get(searchWord);
 					}
 
+					// sets word to right table if it doesn't appear in either
 					if (tweet == 0 && article == 0) {
 						notFound.add(new Word(theWord, searchWord, 0));
 					} else {
-
 						double ll = freq.getFrequencyProfile(article,tweet);
-
 				    	searchWords.add(new Word(theWord, searchWord, ll));
 					}
 				}
 			});
 
-		    StackPane list = new StackPane();
-		    list.getChildren().add(table);
-		    border.setLeft(list);
 
 
+
+		    // set scene!
 	        Scene scene = new Scene(border, 800, 600);
 	        primaryStage.setScene(scene);
 	        primaryStage.setTitle("Media Linguist");

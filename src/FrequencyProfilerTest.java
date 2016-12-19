@@ -14,10 +14,9 @@ public class FrequencyProfilerTest {
 	}
 
 	@Test
-	public void testAgainstCalculator() {
+	public void givesNegativeNumberForB() {
 		double llTest = fp.getFrequencyProfile(17,20);
-		System.out.print(llTest);
-//		assertEquals("calculates ll like online calculator", 63.27, llTest);
+		assertTrue("assigns negative loglikeliness when overuse in corpus B", llTest<0);
 	}
 
 }
