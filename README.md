@@ -15,7 +15,7 @@ If the word appears in neither text, zeroes will appear to the side of the word.
 
 Scores are relative frequencies. The closer the score is to 0, the more even the distribution of the word is between the two text bodies. For example, a word like 'the' appears often in both text bodies, and will likely return a score close to zero (somewhere less than 2.00). A higher score (about greater than 3.00) indicates a significantly heavier representation in one of the media outlets. 
 
-If you click on the word once it has been analyzed in the left-side pane, the definition of the word, as supplied by the [Oxford English Dictionary API](https://developer.oxforddictionaries.com/), will appear in the right-side pane. 
+If you click on the word once it has been analyzed in the left-side pane, the definition of the word, as supplied by the [Oxford English Dictionary API](https://developer.oxforddictionaries.com/), will appear in the right-side pane. Any words that don't appear in either text will appear in a table on the right side. 
 
 ##Random Word Feature
 The "Get a Random Word" button will generate a random word from the English dictionary using a random word API call from ["SetGetGo"](http://www.setgetgo.com/). The word will appear in the search box. If you don't like the word it has chosen, you can click the random word button again before initiating the analysis. 
