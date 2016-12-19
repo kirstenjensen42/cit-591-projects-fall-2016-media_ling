@@ -5,11 +5,11 @@ import org.json.JSONObject;
 public class OETester {
 
 	public static void main(String[] args) {
-		
-		try{	
-		
-			
-		OECaller oe = new OECaller("obsequious");
+
+		try{
+
+
+		OECaller oe = new OECaller("ogs");
 		System.out.println(oe.getJSO());
 		//need to get etymologies: or whatever you want:
 		JSONObject ety = oe.getJSO();
@@ -17,12 +17,12 @@ public class OETester {
 		System.out.println(	ety.getJSONArray("results").getJSONObject(0).getJSONArray("lexicalEntries"
 				+ "").getJSONObject(0).getJSONArray("entries").getJSONObject(0).getJSONArray("etymologies").get(0));
 		}
-		
+
 		catch(Exception e){
 			System.out.println("Can't get etymology for this word");
 		}
-		
-		
+
+
 	}
 
 }

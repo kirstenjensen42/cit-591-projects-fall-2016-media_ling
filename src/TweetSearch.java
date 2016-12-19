@@ -31,7 +31,7 @@ import twitter4j.TwitterFactory;
  */
 public class TweetSearch {
 
-	private final int TWEET_CAP = 10000;
+	private final int TWEET_CAP = 800;
 	private ArrayList<String> tweetList = new ArrayList<String>();
 //	private Date date;
 	private String yesterday;
@@ -50,7 +50,7 @@ public class TweetSearch {
             query.setLang("en");
             query.since(twoDaysAgo);
             query.until(yesterday);
-            query.setCount(50); //the number of tweets per 'page'
+            query.setCount(20); //the number of tweets per 'page'
             QueryResult result;
             do {
 
@@ -61,7 +61,7 @@ public class TweetSearch {
                 	if(tweetList.size() > getTWEET_CAP()) {
                 		break;
                 	}
-                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
+//                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
                 }
 
             } while ((query = result.nextQuery()) != null);
@@ -71,7 +71,7 @@ public class TweetSearch {
         	catch (TwitterException te) {
  //         te.printStackTrace();
         	String stackMessage = te.getMessage();
-        	if (stackMessage.contains("code - 88")){
+        	if (stackMessage.contains("code - 88")){  //The Twitter code for exceeding rates
         		System.out.println("Tweet limit reached. Try restarting the program in a few minutes.");
         	}
         	else {System.out.println("Failed to search tweets: " + te.getMessage());}
@@ -80,6 +80,7 @@ public class TweetSearch {
 
 
 	}
+
 	/**
 	 * Accessor method for tweetList ArrayList
 	 * @return tweetList
@@ -125,7 +126,6 @@ public class TweetSearch {
 //    }
 //
 //		}
-
 
 	/**
 	 * Accessor method for yesterday's date

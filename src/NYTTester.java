@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -80,6 +82,11 @@ public class NYTTester {
 				+ "that words with Bs and Ks are very funny.? Except, maybe, Bannon.</p> <p><br tabindex=\"-1\""
 				+ " /></p>\",\"wordcount\":\"773\"},\"isHosted\":false}}}";
 
+
+		ZoneId zonedId = ZoneId.of( "America/Montreal" );
+		LocalDate today = LocalDate.now( zonedId );
+		System.out.println( "today : " + today );
+
 //		text = text.replaceFirst("[^\\<]*<p>", "");
 //
 //		text = text.replaceAll("\",\"wordcount\".*}", "");
@@ -95,11 +102,11 @@ public class NYTTester {
 //		System.out.println(text);
 
 
-		GuardianTextBuilder gBuild = new GuardianTextBuilder("2016-12-09") ;
+//		GuardianTextBuilder gBuild = new GuardianTextBuilder("2016-12-09") ;
 
 //		ArrayList<String> articles = gBuild.callArticleTexts();
 //		System.out.println(articles.get(15));
-		System.out.println("\n\n");
+//		System.out.println("\n\n");
 //		System.out.println(gBuild.getTotalWords());
 
 //		try {

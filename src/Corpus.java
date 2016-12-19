@@ -13,8 +13,7 @@ public class Corpus {
 
 		wordList = WordCounter.getWordList(text) ;
 		words = WordCounter.countOccurrences(wordList) ;
-
-
+		
 	}
 
 

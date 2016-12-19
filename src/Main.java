@@ -1,4 +1,7 @@
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+
 import javafx.application.Application;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -26,6 +29,21 @@ import javafx.scene.text.Text;
 
 
 public class Main extends Application {
+
+	ZoneId zonedId = ZoneId.of( "America/Montreal" );
+	LocalDate today = LocalDate.now( zonedId );
+
+	GuardianTextBuilder gBuild = new GuardianTextBuilder(today.toString());
+//	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
+
+	TweetParser tp = new TweetParser();
+
+	Corpus guardian = new Corpus(gBuild.callArticleTexts());
+	Corpus twitter = new Corpus(tp.getWordList());
+//	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
+
+	FrequencyProfiler freq = new FrequencyProfiler(guardian.getTotalWordCount(), twitter.getTotalWordCount());
+
 	@Override
 	public void start(Stage primaryStage) {
 		try {
@@ -93,18 +111,44 @@ public class Main extends Application {
 		    wordCol.setStyle( "-fx-alignment: CENTER;");
 		    guardianCol.setPrefWidth(80);
 
+
+//		    FlowPane flow = new FlowPane();
+//	        flow.setVgap(8);
+//	        flow.setHgap(4);
+//	        flow.setPrefWrapLength(100); // preferred width = 300
+//		    GridPane gridpane = new GridPane();
 		    HBox def = new HBox();
-		    border.setCenter(def);
+//		    gridpane.add(def, 0, 0);
 		    def.setPadding(new Insets(25, 22, 25, 22));
 		    def.setSpacing(10);
-		    def.setStyle("-fx-background-color: #ffffff; -fx-font: 24 arial;");
+		    def.setStyle("-fx-background-color: #ffffff; -fx-font: 18 arial;");
+//		    flow.getChildren().add(def);
+//		    def.prefWidthProperty().bind(gridpane.widthProperty();
+//		    text.wrappingWidthProperty().bind(def.widthProperty().subtract(passed.widthProperty().subtract(10));
+		    border.setCenter(def);
 
+		    TableView<Word> notFoundTable = new TableView<Word>();
+		    table.setEditable(true);
+
+		    ObservableList<Word> notFound = FXCollections.observableArrayList();
+		    notFoundTable.setItems(notFound);
+
+		    TableColumn<Word,String> notFoundList = new TableColumn<Word,String>("Not in either corpus:");
+		    notFoundList.setCellValueFactory(new PropertyValueFactory("word"));
+
+		    notFoundTable.getColumns().setAll(notFoundList);
+		    notFoundTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+		    StackPane notList = new StackPane();
+		    notList.getChildren().add(notFoundTable);
+		    border.setRight(notList);
 
 		    table.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 		        @Override
 		        public void handle(MouseEvent event) {
 		        	Text definition = new Text(table.getSelectionModel().getSelectedItem().getDefinition());
+		        	definition.setWrappingWidth(200);
 		        	def.getChildren().clear();
 		        	def.getChildren().add(definition);
 
@@ -120,8 +164,29 @@ public class Main extends Application {
 					if (searchWord.equals("")) return;
 				    StringProperty theWord = new SimpleStringProperty();
 				    theWord.setValue(searchWord);
-				    searchWords.add(new Word(theWord));
 
+					double tweet;
+					if (twitter.getWords().get(searchWord) == null) {
+						tweet = 0;
+					} else {
+						tweet = twitter.getWords().get(searchWord);
+					}
+
+					double article;
+					if (guardian.getWords().get(searchWord) == null) {
+						article = 0;
+					} else {
+						article = guardian.getWords().get(searchWord);
+					}
+
+					if (tweet == 0 && article == 0) {
+						notFound.add(new Word(theWord, searchWord, 0));
+					} else {
+
+						double ll = freq.getFrequencyProfile(article,tweet);
+
+				    	searchWords.add(new Word(theWord, searchWord, ll));
+					}
 				}
 			});
 
@@ -142,7 +207,42 @@ public class Main extends Application {
 
 
 	public static void main(String[] args) {
+
+		System.out.println("Welcome to Media-Ling.\n");
+		System.out.println("Aquiring resources, please wait...\n");
+
 		launch(args);
+
+//		System.out.println("Enter a word you would like to search for: ");
+
+//		Scanner in = new Scanner(System.in);
+
+//		String searchWord = in.nextLine();
+
+
+//		double tweet;
+//		if (twitter.getWords().get(searchWord) == null) {
+//			tweet = 0;
+//		} else {
+//			tweet = twitter.getWords().get(searchWord);
+//		}
+//
+//		double article;
+//		if (guardian.getWords().get(searchWord) == null) {
+//			article = 0;
+//		} else {
+//			article = guardian.getWords().get(searchWord);
+//		}
+
+//		System.out.println(tweet + ", " + article + "\n");
+//		double ll = freq.getFrequencyProfile(article,tweet);
+
+//		System.out.println(ll);
+
+//		in.close();
+
+
+
 	}
 }
 
