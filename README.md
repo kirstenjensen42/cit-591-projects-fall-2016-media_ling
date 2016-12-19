@@ -2,6 +2,7 @@
 cit-591-projects-fall-2016-media_ling created by GitHub Classroom
 
 **Getting Started**
+
 From an IDE, a user simply runs the program, and the Media-Ling JavaFX interface will appear.
  
 You must have a reliable internet connection for most of Media-Ling's features. 
