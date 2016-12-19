@@ -14,7 +14,8 @@ public class TweetParser {
 	private String testWord;
 
 	/**
-	 * Constructor for the Twitter rest API caller
+	 * Deprecated
+	 * Constructor for the Twitter rest API caller if a user is searching for a word from the console
 	 * @param rest just a variation to overload the constructor,
 	 * @param tw the word to test
 	 */
@@ -73,7 +74,7 @@ public class TweetParser {
 		double counter = 0.0;
 		for (String w : words){
 //			System.out.println(w);
-			if(w.equals(target)){ //or contains
+			if(w.equals(target)){
 				counter++;
 			}
 
@@ -92,7 +93,7 @@ public class TweetParser {
 	/**
 	 * Takes in a ArrayList of Strings removes punctuation and links
 	 * @return ArrayList of Strings of 'clean' words
-	 */ //works but slow...how to improve speed??
+	 */
 	public ArrayList<String> cleanTweets(ArrayList<String> dirtyWords){
 		ArrayList<String> cleanWords = new ArrayList<String>(); //to avoid comod exception
 		String tempWord = new String();
@@ -124,7 +125,14 @@ public class TweetParser {
 	 */
 	public ArrayList<String> getWordList(){
 		return words;
+	}
 
+	/**
+	 * Accessor method for the inital array list of tweets
+	 * @return
+	 */
+	public ArrayList<String> getTweetList(){
+		return tweets;
 	}
 
 }

@@ -32,10 +32,10 @@ public class TweetSearchJUnit {
 	}
 
 	public void checkTweetListSize(){
-
 		assertTrue("Tweet list should be smaller than tweet cap", ts.getTweetList().size() < ts.getTWEET_CAP());
-
 	}
+
+
 
 
 
