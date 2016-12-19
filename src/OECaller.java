@@ -1,12 +1,13 @@
+
 //	import android.os.Bundle;
 //    import android.support.v7.app.AppCompatActivity;
 
-    //add dependencies to your class
-    import java.io.BufferedReader;
+//add dependencies to your class
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-    import java.net.URL;
-    import javax.net.ssl.HttpsURLConnection;
+import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

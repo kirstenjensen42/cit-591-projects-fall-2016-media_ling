@@ -31,7 +31,7 @@ import twitter4j.TwitterFactory;
  */
 public class TweetSearch {
 
-	private final int TWEET_CAP = 800;
+	private final int TWEET_CAP = 10000;
 	private ArrayList<String> tweetList = new ArrayList<String>();
 //	private Date date;
 	private String yesterday;
@@ -50,7 +50,7 @@ public class TweetSearch {
             query.setLang("en");
             query.since(twoDaysAgo);
             query.until(yesterday);
-            query.setCount(20); //the number of tweets per 'page'
+            query.setCount(50); //the number of tweets per 'page'
             QueryResult result;
             do {
 
@@ -61,7 +61,7 @@ public class TweetSearch {
                 	if(tweetList.size() > getTWEET_CAP()) {
                 		break;
                 	}
-//                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
+                    System.out.println("@" + tweet.getUser().getScreenName() + " - " + tweet.getText());
                 }
 
             } while ((query = result.nextQuery()) != null);
