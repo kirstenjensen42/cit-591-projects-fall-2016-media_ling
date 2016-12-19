@@ -34,13 +34,13 @@ public class Main extends Application {
 	LocalDate today = LocalDate.now( zonedId );
 
 	GuardianTextBuilder gBuild = new GuardianTextBuilder(today.toString());
-//	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
+	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
 
-	TweetParser tp = new TweetParser();
+//	TweetParser tp = new TweetParser();
 
 	Corpus guardian = new Corpus(gBuild.callArticleTexts());
-	Corpus twitter = new Corpus(tp.getWordList());
-//	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
+//	Corpus twitter = new Corpus(tp.getWordList());
+	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
 
 	FrequencyProfiler freq = new FrequencyProfiler(guardian.getTotalWordCount(), twitter.getTotalWordCount());
 
@@ -112,23 +112,14 @@ public class Main extends Application {
 		    guardianCol.setPrefWidth(80);
 
 
-//		    FlowPane flow = new FlowPane();
-//	        flow.setVgap(8);
-//	        flow.setHgap(4);
-//	        flow.setPrefWrapLength(100); // preferred width = 300
-//		    GridPane gridpane = new GridPane();
 		    HBox def = new HBox();
-//		    gridpane.add(def, 0, 0);
 		    def.setPadding(new Insets(25, 22, 25, 22));
 		    def.setSpacing(10);
 		    def.setStyle("-fx-background-color: #ffffff; -fx-font: 18 arial;");
-//		    flow.getChildren().add(def);
-//		    def.prefWidthProperty().bind(gridpane.widthProperty();
-//		    text.wrappingWidthProperty().bind(def.widthProperty().subtract(passed.widthProperty().subtract(10));
 		    border.setCenter(def);
 
 		    TableView<Word> notFoundTable = new TableView<Word>();
-		    table.setEditable(true);
+		    notFoundTable.setEditable(true);
 
 		    ObservableList<Word> notFound = FXCollections.observableArrayList();
 		    notFoundTable.setItems(notFound);
@@ -155,6 +146,18 @@ public class Main extends Application {
 		        }
 		    });
 
+		    notFoundTable.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+		        @Override
+		        public void handle(MouseEvent event) {
+		        	Text definition = new Text(notFoundTable.getSelectionModel().getSelectedItem().getDefinition());
+		        	definition.setWrappingWidth(200);
+		        	def.getChildren().clear();
+		        	def.getChildren().add(definition);
+
+		        }
+		    });
+
 		    searchButton.setOnAction(new EventHandler<ActionEvent>() {
 
 				@Override
@@ -163,7 +166,7 @@ public class Main extends Application {
 					if (searchWord.equals("")) searchWord = wordField.getPromptText();
 					if (searchWord.equals("")) return;
 				    StringProperty theWord = new SimpleStringProperty();
-				    theWord.setValue(searchWord);
+				    theWord.setValue(searchWord.toLowerCase());
 
 					double tweet;
 					if (twitter.getWords().get(searchWord) == null) {
