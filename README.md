@@ -1,15 +1,14 @@
 # cit-591-projects-fall-2016-media_ling
 cit-591-projects-fall-2016-media_ling created by GitHub Classroom
 
-**Getting Started**
-
+##Getting Started
 From an IDE, a user simply runs the program, and the Media-Ling JavaFX interface will appear.
  
 You must have a reliable internet connection for most of Media-Ling's features. 
 
 ![screenshot - 121816 - 18_49_10](https://cloud.githubusercontent.com/assets/23386297/21322606/f1dcb504-c5e7-11e6-94f7-cef16ccd07e8.png)
 
-**Running the Analysis**
+##Running the Analysis
 Once you have entered a word into the "Enter a word", click the button to the immediate right "Search for this word". After searching for a word, it will appear at the bottom of the list on the left side of the application pane. 
 
 If the word appears in neither text, zeroes will appear to the side of the word. Otherwise, a frequency score will appear next to the word, in the column corresponding to the media outlet where it appeared more often. 
@@ -18,7 +17,7 @@ Scores are relative frequencies. The closer the score is to 0, the more even the
 
 If you click on the word once it has been analyzed in the left-side pane, the definition of the word, as supplied by the [Oxford English Dictionary API](https://developer.oxforddictionaries.com/), will appear in the right-side pane. 
 
-**Random Word Feature**
+##Random Word Feature
 The "Get a Random Word" button will generate a random word from the English dictionary using a random word API call from ["SetGetGo"](http://www.setgetgo.com/). The word will appear in the search box. If you don't like the word it has chosen, you can click the random word button again before initiating the analysis. 
 
 **How Media-Ling Gathers Text**
