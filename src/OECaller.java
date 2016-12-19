@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 
 /**
- * This class
+ * This class makes a call to the Oxford English Dictionary API
  * @author DannyR
  *
  */
