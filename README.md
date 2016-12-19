@@ -28,11 +28,11 @@ Due to the wider range of symbols and characters used in Twitter text, an additi
 With two clean bodies of text, Media-Ling creates a Hash-Map of words associated with how often they appear, and feeds the Hash-Maps into a word analysis. 
 
 ##Word Frequency Analysis
-After gathering text, Media-Ling uses the log-likelihood test to compare relative frequencies from two bodies of text (in our case, Twitter and The Guardian). The formula generates a score based on how often a given word appears in a text 'corpus' and normalizes for the sizes of each corpora. In our implementation, a positive score indicates that the word appears more often in The Guardian and a negative score indicates more appearances in Twitter. 
+After gathering text, Media-Ling uses the log-likelihood test to compare relative frequencies from two bodies of text (in our case, Twitter and The Guardian). The formula generates a score based on how often a given word appears in a text 'corpus' and normalizes for the sizes of each corpora. In our implementation within the code, a positive score indicates that the word appears more often in The Guardian and a negative score indicates more appearances in Twitter. 
 
 A deeper dive into this analysis can be found [here](http://wordhoard.northwestern.edu/userman/analysis-comparewords.html). 
 
-#Avoiding Twitter Rate Limits
+##Avoiding Twitter Rate Limits
 If you encounter in your console the message "Tweet limit reached. Try restarting the program in a few minutes" - this means Media-Ling has hit the limit for the number of calls that can be made within a small time-frame by a single application. As the error message suggests, you must restart the program before trying again. This waiting period should last no longer than 15 minutes. 
 
 This error message, however, should rarely occur because Media-Ling does all the API heavy lifting at the program launch. Any word analysis is done on the same results that were generated when the program was first launched. This makes Media-Ling faster and less prone to external errors like those involving connectivity. 
