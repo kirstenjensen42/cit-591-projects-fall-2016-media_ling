@@ -39,13 +39,13 @@ public class Main extends Application {
 	Corpus guardian = new Corpus(gBuild.callArticleTexts());
 
 	// Call Twitter articles
-//	TweetParser tp = new TweetParser();
-//	Corpus twitter = new Corpus(tp.getWordList());
+	TweetParser tp = new TweetParser();
+	Corpus twitter = new Corpus(tp.getWordList());
 
 
 	// alternate if Twitter limit is hit--use two different Guardian corpora
-	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
-	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
+//	GuardianTextBuilder gBuild2 = new GuardianTextBuilder("2016-12-16");
+//	Corpus twitter = new Corpus(gBuild2.callArticleTexts());
 
 	// Set up FrequencyProfiler
 	FrequencyProfiler freq = new FrequencyProfiler(guardian.getTotalWordCount(), twitter.getTotalWordCount());
