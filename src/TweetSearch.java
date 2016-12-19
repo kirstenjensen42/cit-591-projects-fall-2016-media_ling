@@ -31,7 +31,7 @@ import twitter4j.TwitterFactory;
  */
 public class TweetSearch {
 	
-	private final int TWEET_CAP = 10;
+	private final int TWEET_CAP = 100;
 	private ArrayList<String> tweetList = new ArrayList<String>();
 //	private Date date;
 	private String yesterday;
