@@ -10,14 +10,16 @@ import org.json.JSONObject;
 public class OETester {
 
 	public static void main(String[] args) {
-		
-		try{	
-		
+
+
+		try{
+
 		System.out.println("test a word: ");
-		
+
 //		Scanner in = new Scanner(System.in);
 //		String word = in.nextLine();
-		
+
+
 		OECaller oe = new OECaller("blanch");
 //		System.out.println(oe.getJSO());
 		//need to get etymologies: or whatever you want:
@@ -32,17 +34,19 @@ public class OETester {
 //				+ "").getJSONObject(0).getJSONArray("entries").getJSONObject(0).getJSONArray("senses"
 //						+ "").getJSONObject(0).getJSONArray("definitions").get(0));
 //		}
-		
+
+
 		String work = String.valueOf(oe.getDef(oe.getJSO()));
 		System.out.println(work);
-		
+
+
 		}
-		
+
 		catch(Exception e){
 			System.out.println("Can't get etymology for this word");
 		}
-		
-		
+
+
 	}
 
 }

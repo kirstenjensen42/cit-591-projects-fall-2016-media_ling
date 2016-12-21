@@ -1,4 +1,3 @@
-package src;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,8 +13,7 @@ public class Corpus {
 
 		wordList = WordCounter.getWordList(text) ;
 		words = WordCounter.countOccurrences(wordList) ;
-
-
+		
 	}
 
 

@@ -1,5 +1,3 @@
-package src;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,7 +13,7 @@ public class WordCounter {
 	public static ArrayList<String> getWordList(ArrayList<String> corpus) {
 
 		////////// SET TO TRUE TO NOT INCLUDE DIGITS OR TRUE TO INCLUDE DIGITS //////////
-		boolean noDigits = true;
+		boolean noDigits = false;
 
 		ArrayList<String> words = new ArrayList<String>();
 
