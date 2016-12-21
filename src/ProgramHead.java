@@ -14,10 +14,8 @@ public class ProgramHead {
 		System.out.println("Hi there, what word would you like to test?");
 		Scanner in = new Scanner (System.in);
 		String response = in.nextLine();
-		TweetParser tp = new TweetParser("rest", response);
+		TweetParser tp = new TweetParser("rest", response); 
 		System.out.println(tp.getFreq());
-
-
 	}
 
 }

@@ -14,19 +14,19 @@ import org.json.JSONObject;
 
 
 /**
- * This class makes a call to the Oxford English Dictionary API
+ * This class 
  * @author DannyR
  *
  */
 public class OECaller {
-
+	
 	private final String app_id = "0753efd6";
     private final String app_key = "7aa1a3db61a7ac0ee18a473d508fdb70";
 	private final String word;
 	private JSONObject jso;
 	private String def;
 	private Object definition;
-
+	
 	/**
 	 * The constructor for OECaller. It intiates the OE API call
 	 * @param word the word you want the definition for
@@ -34,12 +34,12 @@ public class OECaller {
 	public OECaller(String word) {
 		this.word = word;
 		this.jso = new JSONObject(callOE());
-
-
+		
+		
 //		JSONArray results = jso.getJSONArray("results");
 //		JSONObject jso2 = jso.getJSONObject("lexicalEntries");
 //		System.out.println(jso2.toString());
-
+		
 	}
 	/**
 	 * This method builds an API call to the Oxford English Dictionary
@@ -47,7 +47,7 @@ public class OECaller {
 	 */
     private String dictionaryEntries() {
         final String language = "en";
-
+        
  //       final String filters = "registers=Rare;domains=Art";
         final String word_id = word.toLowerCase(); //word id is case sensitive and lowercase is required
         return "https://od-api.oxforddictionaries.com:443/api/v1/entries/" + language + "/" + word_id;
@@ -78,28 +78,28 @@ public class OECaller {
             return stringBuilder.toString();
 
         }
-
+        
         catch(FileNotFoundException f){
 			System.out.println("Could not find entry.");
 			return f.toString();
 		}
-
+        
         catch (Exception e) {
             e.printStackTrace();
             return e.toString();
         }
      }
-
+    
     /**
      * Accessor method for the JSON Object OE word entry
-     * @return the entry in JSONObject
+     * @return the entry in JSONObject 
      */
     public JSONObject getJSO(){
     	return jso;
     }
-
+    
     /**
-     * Accessor method
+     * Accessor method 
      * @param word
      * @return
      */
@@ -110,14 +110,14 @@ public class OECaller {
 						+ "").getJSONObject(0).getJSONArray("definitions").get(0);
     	return definition;
     }
-
+    
     /**
      * This method converts a Java Object into a string
-     * @param ob a Java Object
+     * @param ob a Java Object 
      * @return the String form of that objet
      */
     public String defToString(Object ob){
     	return String.valueOf(ob);
     }
-
+    
 }

@@ -16,17 +16,21 @@ public class TweetParser {
 	/**
 	 * Deprecated
 	 * Constructor for the Twitter rest API caller if a user is searching for a word from the console
+
 	 * @param rest just a variation to overload the constructor,
+
 	 * @param tw the word to test
 	 */
 	public TweetParser(String rest, String tw){
 		testWord = tw;
 		TweetSearch ts = new TweetSearch();
 		ts.restTweet();
+
 		tweets = ts.getTweetList(); //@TODO test for this
 		parse();
 
 	}
+
 
 	/**
 	 * Empty constructor to do a sample rest API call to get random corpus of words
@@ -34,6 +38,7 @@ public class TweetParser {
 	public TweetParser(){
 		TweetSearch ts = new TweetSearch();
 		ts.restTweet();
+
 		tweets = ts.getTweetList(); //@TODO test for this
 		parse();
 
@@ -64,7 +69,9 @@ public class TweetParser {
 		words = cleanTweets(temp);
 //		 wordFreq(testWord);
 
+
 	}
+
 
 	/**
 	 * Deprecated - Calculates the frequency in which the word appears in the text
@@ -74,7 +81,9 @@ public class TweetParser {
 		double counter = 0.0;
 		for (String w : words){
 //			System.out.println(w);
+
 			if(w.equals(target)){
+
 				counter++;
 			}
 
@@ -93,7 +102,7 @@ public class TweetParser {
 	/**
 	 * Takes in a ArrayList of Strings removes punctuation and links
 	 * @return ArrayList of Strings of 'clean' words
-	 */
+	 */ 
 	public ArrayList<String> cleanTweets(ArrayList<String> dirtyWords){
 		ArrayList<String> cleanWords = new ArrayList<String>(); //to avoid comod exception
 		String tempWord = new String();

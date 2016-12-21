@@ -54,6 +54,7 @@ public class TweetSearch {
             QueryResult result;
             do {
 
+
                 result = twitter.search(query);
                 List<Status> tweets = result.getTweets();
                 for (Status tweet : tweets) {
@@ -78,8 +79,8 @@ public class TweetSearch {
         			System.out.println("Failed to search tweets: " + te.getMessage());}
         			System.exit(-1);
         		}
-
 	}
+
 
 	/**
 	 * Accessor method for tweetList ArrayList
@@ -145,6 +146,54 @@ public class TweetSearch {
 
 	/**
 	 * Accessor method for
+	 * @return
+	 */
+	public int getTWEET_CAP() {
+		return TWEET_CAP;
+	}
+	
+//	/**
+//	 * This method checks rate limits
+//	 * credit @Yusuke, creator of Twitter4J
+//	 */
+//	public void checkRateLimit(){
+//		try{
+//			Map<String ,RateLimitStatus> rateLimitStatus = twitter.getRateLimitStatus();
+//			for (String endpoint : rateLimitStatus.keySet()) {
+//			RateLimitStatus status = rateLimitStatus.get(endpoint);
+//            System.out.println("Endpoint: " + endpoint);
+//            System.out.println(" Limit: " + status.getLimit());
+//            System.out.println(" Remaining: " + status.getRemaining());
+//            System.out.println(" ResetTimeInSeconds: " + status.getResetTimeInSeconds());
+//            System.out.println(" SecondsUntilReset: " + status.getSecondsUntilReset());
+//        }
+//        System.exit(0);
+//    } catch (TwitterException te) {
+//        te.printStackTrace();
+//        System.out.println("Failed to get rate limit status: " + te.getMessage());
+//        System.exit(-1);
+//    }
+//			
+//		}
+	
+	/**
+	 * Accessor method for yesterday's date
+	 * @return String of yesterday's date
+	 */
+	public String getYesterday(){
+		return yesterday;
+	}
+	
+	/**
+	 * Accessor method for the date from two days ago
+	 * @return String date from two days ago
+	 */
+	public String getTwoDaysAgo(){
+		return twoDaysAgo;
+	}
+	
+	/**
+	 * Accessor method for 
 	 * @return
 	 */
 	public int getTWEET_CAP() {

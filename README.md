@@ -11,7 +11,9 @@ You must have a reliable internet connection for most of Media-Ling's features.
 ##Running the Analysis
 Once you have entered a word into the "Enter a word", click the button to the immediate right "Search for this word". After searching for a word, it will appear at the bottom of the list on the left side of the application pane. 
 
+
 A frequency score will appear next to the word, in the column corresponding to the media outlet where it appeared more often. 
+
 
 Scores are relative frequencies. The closer the score is to 0, the more even the distribution of the word is between the two text bodies. For example, a word like 'the' appears often in both text bodies, and will likely return a score close to zero (somewhere less than 2.00). A higher score (about greater than 3.00) indicates a significantly heavier representation in one of the media outlets. 
 
