@@ -27,10 +27,10 @@ public class Config {
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		
 		cb.setDebugEnabled(true).
-			setOAuthConsumerKey("P7fXKwdRrdRopdrSIj8CRD81r").
-			setOAuthConsumerSecret("uWzK0YajfVmCyDiefDLvJWTM7IlMZ7yIZItJe0yIZ0r15AeXGc").
-			setOAuthAccessToken("803065202317070336-IDiD6lqmsZNc2YxIqWygmNXKGoWsrMs").
-			setOAuthAccessTokenSecret("JAwKBXalrPQQ6hSuZLZCkv5xFjX3wgGchkCB485mFqfDD");
+			setOAuthConsumerKey("").
+			setOAuthConsumerSecret("").
+			setOAuthAccessToken("").
+			setOAuthAccessTokenSecret("");
 		
 		return cb;
 	}
